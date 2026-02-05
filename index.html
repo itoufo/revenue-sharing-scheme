@@ -904,41 +904,106 @@
     </div>
 
     <div class="card">
-      <h3>顧客帰属の判定ルール</h3>
-      <div class="warn-box">
-        <strong>要決定事項：</strong>以下のルールを契約前に明確化すること。
+      <h3>顧客帰属の判定ルール（ハイブリッド方式）</h3>
+      <div class="info-box">
+        <strong>基本原則：最終クロージング者に帰属</strong>。ただしリード登録制により、先行して営業活動を行ったチャネルの保護期間を設ける。
       </div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>ケース</th><th>帰属判定</th><th>備考</th></tr></thead>
-          <tbody>
-            <tr>
-              <td>L1が直接獲得</td>
-              <td>当該L1に帰属</td>
-              <td>直販扱い（粗利50%）</td>
-            </tr>
-            <tr>
-              <td>L2が獲得</td>
-              <td>L2の上位L1に紐付</td>
-              <td>L2経由扱い（L1:20% + L2:30%）</td>
-            </tr>
-            <tr>
-              <td>L3が獲得</td>
-              <td>L3 &rarr; L2 &rarr; L1のチェーンで紐付</td>
-              <td>L3経由扱い（L1:10% + L2:20% + L3:20%）</td>
-            </tr>
-            <tr>
-              <td>複数チャネルが関与</td>
-              <td style="color:var(--highlight); font-weight:600;">要ルール策定</td>
-              <td>初回接触 or 最終クロージングのどちらを優先するか</td>
-            </tr>
-            <tr>
-              <td>既存顧客のアップセル</td>
-              <td style="color:var(--highlight); font-weight:600;">要ルール策定</td>
-              <td>元の獲得チャネルに帰属 or 新たにアプローチした者に帰属</td>
-            </tr>
-          </tbody>
-        </table>
+
+      <div style="margin-top:20px;">
+        <h4 style="margin-bottom:12px;">基本帰属ルール</h4>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>ケース</th><th>帰属判定</th><th>備考</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>L1が直接獲得</td>
+                <td>当該L1に帰属</td>
+                <td>直販扱い（粗利50%）</td>
+              </tr>
+              <tr>
+                <td>L2が獲得</td>
+                <td>L2の上位L1に紐付</td>
+                <td>L2経由扱い（L1:20% + L2:30%）</td>
+              </tr>
+              <tr>
+                <td>L3が獲得</td>
+                <td>L3 &rarr; L2 &rarr; L1のチェーンで紐付</td>
+                <td>L3経由扱い（L1:10% + L2:20% + L3:20%）</td>
+              </tr>
+              <tr>
+                <td>複数チャネルが関与</td>
+                <td><strong>最終クロージング者</strong>に帰属</td>
+                <td>ただし保護期間中はリード登録者が優先</td>
+              </tr>
+              <tr>
+                <td>既存顧客のアップセル</td>
+                <td><strong>最終クロージング者</strong>に帰属</td>
+                <td>元チャネルも保護期間内なら優先権あり</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div style="margin-top:24px;">
+        <h4 style="margin-bottom:12px;">リード登録・保護制度</h4>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:16px; margin:16px 0;">
+          <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:10px; padding:20px;">
+            <div style="font-weight:700; color:#1d4ed8; margin-bottom:8px;">1. リード登録</div>
+            <div style="font-size:0.88rem; color:#1e40af;">
+              営業チャネルは見込み顧客を<strong>リード台帳</strong>に登録。登録時点から保護期間が開始。
+            </div>
+          </div>
+          <div style="background:#fef3c7; border:1px solid #fde68a; border-radius:10px; padding:20px;">
+            <div style="font-weight:700; color:#b45309; margin-bottom:8px;">2. 保護期間: 90日</div>
+            <div style="font-size:0.88rem; color:#92400e;">
+              登録から<strong>90日間</strong>、他チャネルがクロージングしても登録チャネルに帰属。横取り防止。
+            </div>
+          </div>
+          <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:10px; padding:20px;">
+            <div style="font-weight:700; color:#047857; margin-bottom:8px;">3. 延長: 最大2回</div>
+            <div style="font-size:0.88rem; color:#065f46;">
+              商談進展の証跡（提案書提出・デモ実施等）があれば<strong>90日延長</strong>可。最大270日。
+            </div>
+          </div>
+          <div style="background:#faf5ff; border:1px solid #c4b5fd; border-radius:10px; padding:20px;">
+            <div style="font-weight:700; color:#6d28d9; margin-bottom:8px;">4. 失効・紛争処理</div>
+            <div style="font-size:0.88rem; color:#5b21b6;">
+              期間満了で失効し、以後は最終クロージング者に帰属。紛争は<strong>3社合議</strong>で判定。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:24px;">
+        <h4 style="margin-bottom:12px;">帰属判定フロー</h4>
+        <div style="background:#f8fafc; border:1px solid var(--border); border-radius:10px; padding:24px; font-size:0.9rem;">
+          <div style="display:flex; flex-direction:column; gap:8px; max-width:600px; margin:0 auto;">
+            <div style="background:var(--accent); color:white; padding:10px 16px; border-radius:8px; text-align:center; font-weight:600;">受注発生</div>
+            <div style="text-align:center; color:var(--muted);">&darr;</div>
+            <div style="background:#dbeafe; padding:10px 16px; border-radius:8px; text-align:center; font-weight:600; color:#1d4ed8;">当該顧客にリード登録があるか？</div>
+            <div style="display:flex; gap:24px; justify-content:center;">
+              <div style="display:flex; flex-direction:column; align-items:center; gap:8px; flex:1;">
+                <div style="color:var(--muted); font-size:0.82rem;">&darr; なし</div>
+                <div style="background:#f0fdf4; padding:10px 16px; border-radius:8px; text-align:center; font-weight:600; color:#047857; width:100%;">最終クロージング者に帰属</div>
+              </div>
+              <div style="display:flex; flex-direction:column; align-items:center; gap:8px; flex:1;">
+                <div style="color:var(--muted); font-size:0.82rem;">&darr; あり</div>
+                <div style="background:#fef3c7; padding:10px 16px; border-radius:8px; text-align:center; font-weight:600; color:#b45309; width:100%;">保護期間内か？</div>
+                <div style="display:flex; gap:16px; width:100%;">
+                  <div style="display:flex; flex-direction:column; align-items:center; gap:6px; flex:1;">
+                    <div style="color:var(--muted); font-size:0.82rem;">&darr; 期間内</div>
+                    <div style="background:#dbeafe; padding:8px 12px; border-radius:8px; text-align:center; font-weight:600; color:#1d4ed8; font-size:0.85rem; width:100%;">登録チャネルに帰属</div>
+                  </div>
+                  <div style="display:flex; flex-direction:column; align-items:center; gap:6px; flex:1;">
+                    <div style="color:var(--muted); font-size:0.82rem;">&darr; 失効</div>
+                    <div style="background:#f0fdf4; padding:8px 12px; border-radius:8px; text-align:center; font-weight:600; color:#047857; font-size:0.85rem; width:100%;">クロージング者に帰属</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -1044,6 +1109,7 @@
             <tr><td>決定時期</td><td>商品ローンチ前</td><td>商品企画プロセスで原価・定価・按分率を一括決定</td></tr>
             <tr><td>ACSC按分テンプレート</td><td><strong>20% / 30% / 40%</strong>の3段階</td><td>寄与度に応じて選択</td></tr>
             <tr><td>報酬基準</td><td>全て<strong>粗利ベース</strong></td><td>売上ベースは不使用</td></tr>
+            <tr><td>顧客帰属ルール</td><td><strong>ハイブリッド方式</strong>（最終クロージング + リード登録保護90日）</td><td>保護期間は最大2回延長可（最大270日）</td></tr>
           </tbody>
         </table>
       </div>
@@ -1057,42 +1123,36 @@
           <tbody>
             <tr>
               <td>1</td>
-              <td><strong>顧客帰属の判定基準</strong></td>
-              <td>複数チャネル関与時の帰属ルール。初回接触 vs 最終クロージング。</td>
-              <td><span class="pill" style="background:#fee2e2;color:#dc2626;">高</span></td>
-            </tr>
-            <tr>
-              <td>2</td>
               <td><strong>寄与度の具体的評価基準</strong></td>
               <td>5軸評価のスコアリング方法、重み付けの有無。</td>
               <td><span class="pill" style="background:#fee2e2;color:#dc2626;">高</span></td>
             </tr>
             <tr>
-              <td>3</td>
+              <td>2</td>
               <td><strong>ロードの利益按分基準</strong></td>
               <td>テンプレートでのロード比率をどう決めるか（ACSC決定後の残りをウォーカーとどう分けるか）。</td>
               <td><span class="pill" style="background:#fee2e2;color:#dc2626;">高</span></td>
             </tr>
             <tr>
-              <td>4</td>
+              <td>3</td>
               <td><strong>精算サイクル</strong></td>
               <td>月次精算を前提とするが、締日・支払日の設定。</td>
               <td><span class="pill" style="background:#fef3c7;color:#b45309;">中</span></td>
             </tr>
             <tr>
-              <td>5</td>
+              <td>4</td>
               <td><strong>L2/L3の審査基準</strong></td>
               <td>代理店として認定する要件。</td>
               <td><span class="pill" style="background:#fef3c7;color:#b45309;">中</span></td>
             </tr>
             <tr>
-              <td>6</td>
+              <td>5</td>
               <td><strong>月商レンジ外の対応</strong></td>
               <td>月商100万未満・1000万超の場合の報酬率調整の有無。</td>
               <td><span class="pill" style="background:#dbeafe;color:#1d4ed8;">低</span></td>
             </tr>
             <tr>
-              <td>7</td>
+              <td>6</td>
               <td><strong>解約・返品時の報酬扱い</strong></td>
               <td>クローバック条項の有無。</td>
               <td><span class="pill" style="background:#dbeafe;color:#1d4ed8;">低</span></td>
