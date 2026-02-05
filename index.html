@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>報酬スキーム説明資料</title>
+<style>
+  :root {
+    --primary: #1a1a2e;
+    --secondary: #16213e;
+    --accent: #0f3460;
+    --highlight: #e94560;
+    --walker: #2563eb;
+    --road: #7c3aed;
+    --acsc: #059669;
+    --l1: #2563eb;
+    --l2: #f59e0b;
+    --l3: #ef4444;
+    --profit: #10b981;
+    --cost: #ef4444;
+    --gross: #3b82f6;
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --text: #1e293b;
+    --muted: #64748b;
+    --border: #e2e8f0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+  }
+
+  /* Header */
+  .header {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: white;
+    padding: 48px 0;
+    text-align: center;
+  }
+  .header h1 { font-size: 2.2rem; font-weight: 700; margin-bottom: 8px; }
+  .header p { font-size: 1.05rem; opacity: 0.85; }
+  .header .badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    padding: 4px 16px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    margin-top: 12px;
+  }
+
+  /* Navigation */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+  .nav-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+  }
+  .nav a {
+    display: block;
+    padding: 14px 20px;
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 0.88rem;
+    font-weight: 500;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+  }
+  .nav a:hover { color: var(--text); border-bottom-color: var(--accent); }
+
+  /* Container */
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+  /* Section */
+  .section { padding: 56px 0; }
+  .section + .section { border-top: 1px solid var(--border); }
+  .section-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-title .num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: var(--accent);
+    color: white;
+    border-radius: 50%;
+    font-size: 0.95rem;
+    flex-shrink: 0;
+  }
+  .section-desc { color: var(--muted); margin-bottom: 32px; font-size: 0.95rem; }
+
+  /* Cards */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .card h3 { font-size: 1.1rem; margin-bottom: 12px; }
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+
+  /* Flow Diagram */
+  .flow { display: flex; flex-direction: column; gap: 0; align-items: center; }
+  .flow-row { display: flex; align-items: center; gap: 16px; width: 100%; justify-content: center; flex-wrap: wrap; }
+  .flow-box {
+    padding: 14px 24px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-align: center;
+    min-width: 140px;
+    position: relative;
+  }
+  .flow-arrow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 4px 0;
+    color: var(--muted);
+    font-size: 0.8rem;
+  }
+  .flow-arrow .arrow { font-size: 1.4rem; line-height: 1; }
+  .flow-arrow .label { font-size: 0.78rem; color: var(--muted); }
+
+  /* Revenue Flow */
+  .revenue-flow { margin: 24px 0; }
+  .revenue-bar {
+    display: flex;
+    height: 56px;
+    border-radius: 10px;
+    overflow: hidden;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  .revenue-bar > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    line-height: 1.3;
+  }
+  .revenue-bar .small { font-size: 0.72rem; font-weight: 400; opacity: 0.9; }
+
+  /* Waterfall */
+  .waterfall { display: flex; align-items: flex-end; gap: 12px; height: 260px; margin: 32px 0; justify-content: center; }
+  .waterfall-item { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .waterfall-bar {
+    width: 80px;
+    border-radius: 6px 6px 0 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 8px;
+    color: white;
+    font-weight: 700;
+    font-size: 0.9rem;
+    transition: height 0.5s ease;
+  }
+  .waterfall-label { font-size: 0.78rem; color: var(--muted); text-align: center; }
+
+  /* Process */
+  .process-steps { display: flex; flex-direction: column; gap: 0; position: relative; padding-left: 36px; }
+  .process-steps::before {
+    content: '';
+    position: absolute;
+    left: 15px;
+    top: 20px;
+    bottom: 20px;
+    width: 2px;
+    background: var(--border);
+  }
+  .process-step {
+    position: relative;
+    padding: 16px 0 16px 24px;
+  }
+  .process-step::before {
+    content: '';
+    position: absolute;
+    left: -28px;
+    top: 22px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 3px solid var(--bg);
+    box-shadow: 0 0 0 2px var(--accent);
+  }
+  .process-step .step-title { font-weight: 600; margin-bottom: 4px; }
+  .process-step .step-desc { color: var(--muted); font-size: 0.9rem; }
+
+  /* Table */
+  .table-wrap { overflow-x: auto; margin: 20px 0; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+  th, td { padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--border); }
+  th { background: #f1f5f9; font-weight: 600; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.03em; color: var(--muted); }
+  td { font-variant-numeric: tabular-nums; }
+  tr:hover td { background: #f8fafc; }
+
+  /* Badges / Pills */
+  .pill {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.78rem;
+    font-weight: 600;
+  }
+  .pill-walker { background: #dbeafe; color: #1d4ed8; }
+  .pill-road { background: #ede9fe; color: #6d28d9; }
+  .pill-acsc { background: #d1fae5; color: #047857; }
+  .pill-l1 { background: #dbeafe; color: #1d4ed8; }
+  .pill-l2 { background: #fef3c7; color: #b45309; }
+  .pill-l3 { background: #fee2e2; color: #dc2626; }
+
+  /* Simulation */
+  .sim-controls {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+    align-items: flex-end;
+  }
+  .sim-group label {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--muted);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+  .sim-group input, .sim-group select {
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    background: white;
+    min-width: 140px;
+  }
+  .sim-group input:focus, .sim-group select:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(15,52,96,0.1);
+  }
+  .sim-results {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+  }
+  .sim-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+  }
+  .sim-card .label { font-size: 0.8rem; color: var(--muted); margin-bottom: 4px; }
+  .sim-card .value { font-size: 1.6rem; font-weight: 700; }
+  .sim-card .sub { font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
+  .sim-card.highlight { border-color: var(--accent); background: linear-gradient(135deg, #f0f4ff, #fff); }
+
+  /* Decision Matrix */
+  .decision-matrix {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2px;
+    background: var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 20px 0;
+  }
+  .dm-header {
+    background: var(--accent);
+    color: white;
+    padding: 14px 16px;
+    font-weight: 600;
+    font-size: 0.88rem;
+    text-align: center;
+  }
+  .dm-cell {
+    background: white;
+    padding: 14px 16px;
+    font-size: 0.88rem;
+    text-align: center;
+  }
+
+  /* Channel diagram */
+  .channel-diagram {
+    display: flex;
+    gap: 24px;
+    margin: 24px 0;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .channel-card {
+    flex: 1;
+    min-width: 260px;
+    max-width: 340px;
+    background: white;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+  }
+  .channel-card h4 { margin-bottom: 16px; font-size: 1rem; }
+  .channel-node {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    margin: 4px 0;
+    border-radius: 8px;
+    font-size: 0.88rem;
+  }
+  .channel-node .pct { font-weight: 700; }
+  .channel-connector {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.9rem;
+    padding: 2px 0;
+  }
+  .channel-total {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 2px solid var(--border);
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+
+  /* Contribution Assessment */
+  .assess-grid {
+    display: grid;
+    grid-template-columns: 200px repeat(3, 1fr);
+    gap: 2px;
+    background: var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 20px 0;
+  }
+  .assess-cell {
+    background: white;
+    padding: 12px 16px;
+    font-size: 0.88rem;
+  }
+  .assess-header {
+    font-weight: 600;
+    background: #f1f5f9;
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+  .assess-score {
+    text-align: center;
+    font-weight: 700;
+  }
+
+  /* Info box */
+  .info-box {
+    background: #eff6ff;
+    border-left: 4px solid var(--accent);
+    padding: 16px 20px;
+    border-radius: 0 8px 8px 0;
+    margin: 16px 0;
+    font-size: 0.9rem;
+  }
+  .warn-box {
+    background: #fef3c7;
+    border-left: 4px solid #f59e0b;
+    padding: 16px 20px;
+    border-radius: 0 8px 8px 0;
+    margin: 16px 0;
+    font-size: 0.9rem;
+  }
+
+  /* Print */
+  @media print {
+    .nav { display: none; }
+    .section { page-break-inside: avoid; }
+    body { font-size: 10pt; }
+  }
+  @media (max-width: 768px) {
+    .header h1 { font-size: 1.6rem; }
+    .container { padding: 0 16px; }
+    .decision-matrix { grid-template-columns: 1fr; }
+    .assess-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <div class="container">
+    <h1>報酬スキーム説明資料</h1>
+    <p>利益按分・営業報酬の二層構造モデル</p>
+    <div class="badge">CONFIDENTIAL - Internal Use Only</div>
+  </div>
+</div>
+
+<!-- Navigation -->
+<div class="nav">
+  <div class="nav-inner">
+    <a href="#overview">全体構造</a>
+    <a href="#revenue-flow">収益フロー</a>
+    <a href="#profit-split">利益按分</a>
+    <a href="#assessment">商品企画プロセス</a>
+    <a href="#sales-commission">営業報酬</a>
+    <a href="#sales-process">販売プロセス</a>
+    <a href="#simulation">シミュレーション</a>
+    <a href="#decisions">決定事項一覧</a>
+  </div>
+</div>
+
+<!-- Section 1: Overview -->
+<div class="container">
+  <div class="section" id="overview">
+    <div class="section-title"><span class="num">1</span> 全体構造</div>
+    <p class="section-desc">本スキームは「利益按分」と「営業報酬（粗利按分）」の二層で構成される。</p>
+
+    <div class="card">
+      <h3>二層構造の概要</h3>
+      <div class="revenue-flow">
+        <div class="revenue-bar">
+          <div style="width:20%; background: #94a3b8;">原価<br><span class="small">商品別設定</span></div>
+          <div style="width:40%; background: var(--gross);">営業費用<br><span class="small">粗利の50%</span></div>
+          <div style="width:40%; background: var(--profit);">利益<br><span class="small">粗利の50%</span></div>
+        </div>
+      </div>
+      <div style="display:flex; gap: 24px; margin-top:20px; flex-wrap: wrap;">
+        <div style="flex:1; min-width:250px; padding:16px; background:#f0fdf4; border-radius:8px; border:1px solid #bbf7d0;">
+          <div style="font-weight:700; color:#047857; margin-bottom:6px;">Layer 1: 利益按分</div>
+          <div style="font-size:0.9rem; color:#065f46;">
+            商品企画プロセスで<strong>原価・定価・按分率</strong>を一括決定<br>
+            対象：<span class="pill pill-walker">ウォーカー</span>
+            <span class="pill pill-road">ロード</span>
+            <span class="pill pill-acsc">ACSC</span><br>
+            <strong>各社最低10%保証</strong>、残り70%を寄与度で配分
+          </div>
+        </div>
+        <div style="flex:1; min-width:250px; padding:16px; background:#eff6ff; border-radius:8px; border:1px solid #bfdbfe;">
+          <div style="font-weight:700; color:#1d4ed8; margin-bottom:6px;">Layer 2: 営業報酬（粗利按分）</div>
+          <div style="font-size:0.9rem; color:#1e40af;">
+            営業実績に基づき支払<br>
+            対象：全販売チャネル（直販・L2・L3）<br>
+            <strong>粗利の50%上限</strong>で設計
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>関係者マップ</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>エンティティ</th><th>役割</th><th>利益按分</th><th>営業報酬</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="pill pill-walker">ウォーカー</span></td>
+              <td>メーカー技術対応・製造</td>
+              <td>対象（最低10%）</td>
+              <td>L1として直販可能</td>
+            </tr>
+            <tr>
+              <td><span class="pill pill-road">ロード</span></td>
+              <td>事業運営</td>
+              <td>対象（最低10%）</td>
+              <td>L1として直販可能</td>
+            </tr>
+            <tr>
+              <td><span class="pill pill-acsc">ACSC</span></td>
+              <td>商品戦略・企画</td>
+              <td>対象（最低10%）</td>
+              <td>L1として直販可能</td>
+            </tr>
+            <tr>
+              <td><span class="pill" style="background:#f3e8ff;color:#7c3aed;">次世代</span></td>
+              <td>次世代事業</td>
+              <td>-</td>
+              <td>L1として直販可能</td>
+            </tr>
+            <tr>
+              <td><span class="pill" style="background:#f1f5f9;color:#475569;">その他</span></td>
+              <td>要審査</td>
+              <td>-</td>
+              <td>審査の上L1参加可能</td>
+            </tr>
+            <tr>
+              <td><span class="pill pill-l2">L2代理店</span></td>
+              <td>二次代理店</td>
+              <td>-</td>
+              <td>粗利の30%</td>
+            </tr>
+            <tr>
+              <td><span class="pill pill-l3">L3代理店</span></td>
+              <td>三次代理店</td>
+              <td>-</td>
+              <td>粗利の20%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 2: Revenue Flow -->
+  <div class="section" id="revenue-flow">
+    <div class="section-title"><span class="num">2</span> 収益フロー</div>
+    <p class="section-desc">売上から各レイヤーへの分配を視覚化。</p>
+
+    <div class="card">
+      <h3>ウォーターフォール（月商500万・原価率20%の場合）</h3>
+      <div class="waterfall" id="waterfall-chart">
+        <div class="waterfall-item">
+          <div class="waterfall-bar" style="height:240px; background:linear-gradient(180deg, #475569, #64748b);">500</div>
+          <div class="waterfall-label">売上<br>500万</div>
+        </div>
+        <div class="waterfall-item">
+          <div class="waterfall-bar" style="height:48px; background:var(--cost);">100</div>
+          <div class="waterfall-label">原価<br>100万</div>
+        </div>
+        <div class="waterfall-item">
+          <div class="waterfall-bar" style="height:192px; background:var(--gross);">400</div>
+          <div class="waterfall-label">粗利<br>400万</div>
+        </div>
+        <div class="waterfall-item">
+          <div class="waterfall-bar" style="height:96px; background:var(--l2);">200</div>
+          <div class="waterfall-label">営業費用<br>200万</div>
+        </div>
+        <div class="waterfall-item">
+          <div class="waterfall-bar" style="height:96px; background:var(--profit);">200</div>
+          <div class="waterfall-label">利益<br>200万</div>
+        </div>
+      </div>
+
+      <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:16px;">
+        <div style="font-size:0.82rem; color:var(--muted);">
+          <span style="display:inline-block;width:12px;height:12px;background:#64748b;border-radius:2px;vertical-align:middle;margin-right:4px;"></span>売上（定価）
+          <span style="display:inline-block;width:12px;height:12px;background:var(--cost);border-radius:2px;vertical-align:middle;margin-right:4px;margin-left:12px;"></span>原価（商品別）
+          <span style="display:inline-block;width:12px;height:12px;background:var(--gross);border-radius:2px;vertical-align:middle;margin-right:4px;margin-left:12px;"></span>粗利
+          <span style="display:inline-block;width:12px;height:12px;background:var(--l2);border-radius:2px;vertical-align:middle;margin-right:4px;margin-left:12px;"></span>営業費用(粗利50%)
+          <span style="display:inline-block;width:12px;height:12px;background:var(--profit);border-radius:2px;vertical-align:middle;margin-right:4px;margin-left:12px;"></span>利益(粗利50%)
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>計算式</h3>
+      <div style="font-family: monospace; background: #f8fafc; padding: 20px; border-radius: 8px; line-height: 2.2; font-size: 0.95rem;">
+        <div><strong>粗利</strong> = 売上（定価） - 原価 = 売上 x (1 - <strong>原価率</strong>)</div>
+        <div><strong>営業費用</strong> = 粗利 x <strong>50%</strong></div>
+        <div><strong>利益</strong> = 粗利 - 営業費用 = 粗利 x <strong>50%</strong></div>
+        <div style="margin-top:8px; padding-top:8px; border-top:1px dashed #cbd5e1;">
+          <span style="color:var(--highlight); font-weight:600;">原価率・定価は商品企画プロセスで商品ごとに決定</span><br>
+          <span style="color:var(--profit);">利益</span> &rarr; Layer 1（利益按分） &rarr; ウォーカー / ロード / ACSC<br>
+          <span style="color:var(--l2);">営業費用</span> &rarr; Layer 2（営業報酬） &rarr; 販売チャネルへの成果報酬
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 3: Profit Split -->
+  <div class="section" id="profit-split">
+    <div class="section-title"><span class="num">3</span> 利益按分（Layer 1）</div>
+    <p class="section-desc">商品企画・設計フェーズの寄与度に基づき、商品ごとにローンチ前に決定する。</p>
+
+    <div class="card">
+      <h3>基本ルール</h3>
+      <div class="info-box">
+        <strong>最低保証：</strong>ウォーカー・ロード・ACSC の3社は、それぞれ利益の<strong>最低10%</strong>を取得する。<br>
+        残り<strong>70%</strong>を寄与度に応じて配分する。合計は常に<strong>100%</strong>。
+      </div>
+
+      <div style="margin-top:20px;">
+        <h4 style="margin-bottom:12px;">配分テンプレート例</h4>
+        <div class="decision-matrix">
+          <div class="dm-header">パターン</div>
+          <div class="dm-header"><span class="pill pill-walker">ウォーカー</span></div>
+          <div class="dm-header"><span class="pill pill-road">ロード</span></div>
+          <!--<div class="dm-header"><span class="pill pill-acsc">ACSC</span></div>-->
+
+          <div class="dm-cell" style="font-weight:600;">ACSC寄与 低 (20%)</div>
+          <div class="dm-cell assess-score">50%</div>
+          <div class="dm-cell assess-score">30%</div>
+          <!--<div class="dm-cell assess-score" style="color:var(--acsc);">20%</div>-->
+
+          <div class="dm-cell" style="font-weight:600;">ACSC寄与 中 (30%)</div>
+          <div class="dm-cell assess-score">45%</div>
+          <div class="dm-cell assess-score">25%</div>
+          <!--<div class="dm-cell assess-score" style="color:var(--acsc);">30%</div>-->
+
+          <div class="dm-cell" style="font-weight:600;">ACSC寄与 高 (40%)</div>
+          <div class="dm-cell assess-score">40%</div>
+          <div class="dm-cell assess-score">20%</div>
+          <!--<div class="dm-cell assess-score" style="color:var(--acsc);">40%</div>-->
+        </div>
+        <p style="font-size:0.85rem; color:var(--muted); margin-top:8px;">
+          ※ 上記はテンプレート。実際の配分は寄与率査定プロセス（Section 4）を経て決定。<br>
+          ※ 3社すべてが最低10%を保証されるため、特定1社が60%を超えることはない。
+        </p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>利益按分のビジュアル（ACSC 30%の場合）</h3>
+      <div class="revenue-bar" style="height:48px; margin-top:12px;">
+        <div style="width:45%; background:var(--walker);">ウォーカー 45%</div>
+        <div style="width:25%; background:var(--road);">ロード 25%</div>
+        <div style="width:30%; background:var(--acsc);">ACSC 30%</div>
+      </div>
+      <div style="text-align:center; margin-top:8px; font-size:0.82rem; color:var(--muted);">
+        月商500万の場合 → 利益200万 → ウォーカー 90万 / ロード 50万 / ACSC 60万
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 4: Assessment Process -->
+  <div class="section" id="assessment">
+    <div class="section-title"><span class="num">4</span> 商品企画プロセス（寄与率査定）</div>
+    <p class="section-desc">商品ローンチ前に実施。原価・定価・利益按分比率を一括で決定する。</p>
+
+    <div class="card">
+      <h3>商品企画プロセス全体フロー</h3>
+      <div class="info-box" style="margin-bottom:20px;">
+        <strong>本プロセスの決定事項：</strong>商品ごとに以下3点を確定させ、ローンチの前提条件とする。<br>
+        &nbsp;&nbsp;1. <strong>原価</strong>（仕入・製造コスト）<br>
+        &nbsp;&nbsp;2. <strong>定価</strong>（販売価格） &rarr; 原価率が自動算出される<br>
+        &nbsp;&nbsp;3. <strong>利益按分比率</strong>（ウォーカー / ロード / ACSC）
+      </div>
+      <div class="process-steps">
+        <div class="process-step">
+          <div class="step-title">Step 1: 商品企画の提案</div>
+          <div class="step-desc">商品コンセプト・ターゲット市場・技術要件を提案者がドキュメント化。</div>
+        </div>
+        <div class="process-step">
+          <div class="step-title">Step 2: 原価・定価の設定</div>
+          <div class="step-desc">製造/仕入コスト（原価）と販売価格（定価）を策定。粗利率を確認し、事業として成立するか検証。</div>
+        </div>
+        <div class="process-step">
+          <div class="step-title">Step 3: 各社の役割定義</div>
+          <div class="step-desc">ウォーカー・ロード・ACSCそれぞれが商品開発における担当領域と貢献範囲を明示。</div>
+        </div>
+        <div class="process-step">
+          <div class="step-title">Step 4: 寄与度の評価</div>
+          <div class="step-desc">下記5軸で各社の寄与を評価し、スコアリング。</div>
+        </div>
+        <div class="process-step">
+          <div class="step-title">Step 5: 按分比率の合意</div>
+          <div class="step-desc">スコアに基づき、3社合意のもと按分比率を確定。各社最低10%を保証。</div>
+        </div>
+        <div class="process-step">
+          <div class="step-title">Step 6: 商品別覚書の締結</div>
+          <div class="step-desc">原価・定価・按分比率を商品別覚書として文書化。見直し条件も併記。</div>
+        </div>
+        <div class="process-step">
+          <div class="step-title">Step 7: 商品ローンチ</div>
+          <div class="step-desc">原価・定価・按分比率の3点が全て確定してローンチ可能。未確定のままのローンチは不可。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>商品企画プロセスの決定事項サマリ</h3>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:16px; margin:16px 0;">
+        <div style="background:#fef2f2; border:1px solid #fecaca; border-radius:10px; padding:20px; text-align:center;">
+          <div style="font-size:0.78rem; color:var(--cost); font-weight:600; text-transform:uppercase; letter-spacing:0.05em;">決定事項 1</div>
+          <div style="font-size:1.3rem; font-weight:700; margin:8px 0 4px;">原価</div>
+          <div style="font-size:0.82rem; color:var(--muted);">仕入・製造コスト<br>商品ごとに設定</div>
+        </div>
+        <div style="background:#f0f9ff; border:1px solid #bae6fd; border-radius:10px; padding:20px; text-align:center;">
+          <div style="font-size:0.78rem; color:#0369a1; font-weight:600; text-transform:uppercase; letter-spacing:0.05em;">決定事項 2</div>
+          <div style="font-size:1.3rem; font-weight:700; margin:8px 0 4px;">定価</div>
+          <div style="font-size:0.82rem; color:var(--muted);">販売価格<br>原価率が自動算出</div>
+        </div>
+        <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:10px; padding:20px; text-align:center;">
+          <div style="font-size:0.78rem; color:#047857; font-weight:600; text-transform:uppercase; letter-spacing:0.05em;">決定事項 3</div>
+          <div style="font-size:1.3rem; font-weight:700; margin:8px 0 4px;">按分比率</div>
+          <div style="font-size:0.82rem; color:var(--muted);">3社の利益配分<br>各社最低10%保証</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>寄与度評価の5軸</h3>
+      <div class="assess-grid">
+        <div class="assess-cell assess-header">評価軸</div>
+        <div class="assess-cell assess-header" style="text-align:center;"><span class="pill pill-walker">ウォーカー</span></div>
+        <div class="assess-cell assess-header" style="text-align:center;"><span class="pill pill-road">ロード</span></div>
+        <div class="assess-cell assess-header" style="text-align:center;"><span class="pill pill-acsc">ACSC</span></div>
+
+        <div class="assess-cell" style="font-weight:600;">1. 商品企画・コンセプト</div>
+        <div class="assess-cell assess-score">-</div>
+        <div class="assess-cell assess-score">-</div>
+        <div class="assess-cell assess-score">-</div>
+
+        <div class="assess-cell" style="font-weight:600;">2. 技術開発・製造</div>
+        <div class="assess-cell assess-score">-</div>
+        <div class="assess-cell assess-score">-</div>
+        <div class="assess-cell assess-score">-</div>
+
+        <div class="assess-cell" style="font-weight:600;">3. マーケット戦略</div>
+        <div class="assess-cell assess-score">-</div>
+        <div class="assess-cell assess-score">-</div>
+        <div class="assess-cell assess-score">-</div>
+
+        <div class="assess-cell" style="font-weight:600;">4. 運営・オペレーション</div>
+        <div class="assess-cell assess-score">-</div>
+        <div class="assess-cell assess-score">-</div>
+        <div class="assess-cell assess-score">-</div>
+
+        <div class="assess-cell" style="font-weight:600;">5. リスク負担・資本投下</div>
+        <div class="assess-cell assess-score">-</div>
+        <div class="assess-cell assess-score">-</div>
+        <div class="assess-cell assess-score">-</div>
+      </div>
+      <p style="font-size:0.85rem; color:var(--muted);">
+        各軸を5段階（1-5）で評価。合計スコア比で按分比率を算出し、最低10%ルールを適用。<br>
+        評価は3社の代表者による合議制とする。
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>見直し条件</h3>
+      <div class="warn-box">
+        以下のいずれかに該当する場合、按分比率の見直しを協議する：
+        <ul style="margin-top:8px; padding-left:20px;">
+          <li>商品ローンチから<strong>12ヶ月経過</strong>時点での定期見直し</li>
+          <li>いずれかの企業の<strong>役割が大幅に変更</strong>された場合</li>
+          <li>月商が想定レンジ（100万〜1000万）を<strong>大幅に超過/下回る</strong>場合</li>
+          <li>3社のうち<strong>いずれかから見直し要請</strong>があった場合（四半期に1回まで）</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 5: Sales Commission -->
+  <div class="section" id="sales-commission">
+    <div class="section-title"><span class="num">5</span> 営業報酬（Layer 2）</div>
+    <p class="section-desc">営業実績に基づく成果報酬。全チャネルで粗利の50%を上限とする。</p>
+
+    <div class="card">
+      <h3>チャネル別報酬構造</h3>
+      <div class="channel-diagram">
+        <!-- Direct -->
+        <div class="channel-card" style="border-color: var(--l1);">
+          <h4>直販</h4>
+          <div class="channel-node" style="background:#dbeafe;">
+            <span>L1（元締め）</span>
+            <span class="pct" style="color:var(--l1);">50%</span>
+          </div>
+          <div class="channel-total" style="color:var(--l1);">合計: 50%</div>
+        </div>
+
+        <!-- L2 Route -->
+        <div class="channel-card" style="border-color: var(--l2);">
+          <h4>L2代理店経由</h4>
+          <div class="channel-node" style="background:#dbeafe;">
+            <span>L1（元締め）</span>
+            <span class="pct" style="color:var(--l1);">20%</span>
+          </div>
+          <div class="channel-connector">&darr;</div>
+          <div class="channel-node" style="background:#fef3c7;">
+            <span>L2代理店</span>
+            <span class="pct" style="color:var(--l2);">30%</span>
+          </div>
+          <div class="channel-total" style="color:var(--l2);">合計: 50%</div>
+        </div>
+
+        <!-- L3 Route -->
+        <div class="channel-card" style="border-color: var(--l3);">
+          <h4>L3代理店経由</h4>
+          <div class="channel-node" style="background:#dbeafe;">
+            <span>L1（元締め）</span>
+            <span class="pct" style="color:var(--l1);">10%</span>
+          </div>
+          <div class="channel-connector">&darr;</div>
+          <div class="channel-node" style="background:#fef3c7;">
+            <span>L2代理店</span>
+            <span class="pct" style="color:var(--l2);">20%</span>
+          </div>
+          <div class="channel-connector">&darr;</div>
+          <div class="channel-node" style="background:#fee2e2;">
+            <span>L3代理店</span>
+            <span class="pct" style="color:var(--l3);">20%</span>
+          </div>
+          <div class="channel-total" style="color:var(--l3);">合計: 50%</div>
+        </div>
+      </div>
+      <div class="info-box">
+        <strong>設計原則：</strong>どのチャネルを経由しても営業費用は粗利の50%に収まる。
+        層が深くなるほどL1の取り分は減るが、販路拡大のレバレッジが効く。
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>L1になれるエンティティ</h3>
+      <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:8px;">
+        <span class="pill pill-walker">ウォーカー</span>
+        <span class="pill pill-road">ロード</span>
+        <span class="pill pill-acsc">ACSC</span>
+        <span class="pill" style="background:#f3e8ff;color:#7c3aed;">次世代</span>
+        <span class="pill" style="background:#f1f5f9;color:#475569;">その他（審査制）</span>
+      </div>
+      <p style="font-size:0.88rem; color:var(--muted); margin-top:12px;">
+        各L1は自社の営業力で直販するか、配下にL2/L3代理店を組織して販売する。<br>
+        獲得した顧客はL1に帰属し、その配下チャネルの売上もL1の管理下となる。
+      </p>
+    </div>
+  </div>
+
+  <!-- Section 6: Sales Process -->
+  <div class="section" id="sales-process">
+    <div class="section-title"><span class="num">6</span> 販売プロセス</div>
+    <p class="section-desc">顧客獲得から報酬支払までの全体フロー。</p>
+
+    <div class="card">
+      <h3>販売〜報酬支払フロー</h3>
+      <div style="overflow-x:auto;">
+        <div style="display:flex; gap:0; align-items:stretch; min-width:900px; margin:20px 0;">
+          <!-- Step 1 -->
+          <div style="flex:1; background:linear-gradient(135deg,#eff6ff,#dbeafe); border-radius:10px 0 0 10px; padding:20px; border:1px solid #bfdbfe; border-right:none; position:relative;">
+            <div style="font-size:0.72rem; color:var(--l1); font-weight:700; text-transform:uppercase; letter-spacing:0.05em;">Phase 1</div>
+            <div style="font-weight:700; margin:4px 0 8px;">顧客獲得</div>
+            <ul style="font-size:0.82rem; color:#1e40af; padding-left:16px; margin:0;">
+              <li>L1/L2/L3が顧客にアプローチ</li>
+              <li>獲得チャネルを記録</li>
+              <li>顧客帰属の判定</li>
+            </ul>
+            <div style="position:absolute; right:-12px; top:50%; transform:translateY(-50%); z-index:1; background:#bfdbfe; width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#1d4ed8; font-weight:bold;">&rarr;</div>
+          </div>
+          <!-- Step 2 -->
+          <div style="flex:1; background:linear-gradient(135deg,#f0fdf4,#d1fae5); padding:20px; border:1px solid #a7f3d0; border-right:none; position:relative;">
+            <div style="font-size:0.72rem; color:#047857; font-weight:700; text-transform:uppercase; letter-spacing:0.05em;">Phase 2</div>
+            <div style="font-weight:700; margin:4px 0 8px;">受注・売上計上</div>
+            <ul style="font-size:0.82rem; color:#065f46; padding-left:16px; margin:0;">
+              <li>注文確定</li>
+              <li>売上計上</li>
+              <li>原価控除（商品別原価率） &rarr; 粗利確定</li>
+            </ul>
+            <div style="position:absolute; right:-12px; top:50%; transform:translateY(-50%); z-index:1; background:#a7f3d0; width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#047857; font-weight:bold;">&rarr;</div>
+          </div>
+          <!-- Step 3 -->
+          <div style="flex:1; background:linear-gradient(135deg,#fffbeb,#fef3c7); padding:20px; border:1px solid #fde68a; border-right:none; position:relative;">
+            <div style="font-size:0.72rem; color:#b45309; font-weight:700; text-transform:uppercase; letter-spacing:0.05em;">Phase 3</div>
+            <div style="font-weight:700; margin:4px 0 8px;">営業報酬計算</div>
+            <ul style="font-size:0.82rem; color:#92400e; padding-left:16px; margin:0;">
+              <li>販売チャネルの判定</li>
+              <li>粗利の50%を営業費用として配分</li>
+              <li>L1/L2/L3各層へ比率適用</li>
+            </ul>
+            <div style="position:absolute; right:-12px; top:50%; transform:translateY(-50%); z-index:1; background:#fde68a; width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#b45309; font-weight:bold;">&rarr;</div>
+          </div>
+          <!-- Step 4 -->
+          <div style="flex:1; background:linear-gradient(135deg,#faf5ff,#ede9fe); padding:20px; border:1px solid #c4b5fd; border-right:none; position:relative;">
+            <div style="font-size:0.72rem; color:#6d28d9; font-weight:700; text-transform:uppercase; letter-spacing:0.05em;">Phase 4</div>
+            <div style="font-weight:700; margin:4px 0 8px;">利益按分計算</div>
+            <ul style="font-size:0.82rem; color:#5b21b6; padding-left:16px; margin:0;">
+              <li>粗利の残り50%が利益</li>
+              <li>商品別の按分比率を適用</li>
+              <li>3社への配分額確定</li>
+            </ul>
+            <div style="position:absolute; right:-12px; top:50%; transform:translateY(-50%); z-index:1; background:#c4b5fd; width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#6d28d9; font-weight:bold;">&rarr;</div>
+          </div>
+          <!-- Step 5 -->
+          <div style="flex:1; background:linear-gradient(135deg,#f0fdf4,#bbf7d0); border-radius:0 10px 10px 0; padding:20px; border:1px solid #86efac;">
+            <div style="font-size:0.72rem; color:#15803d; font-weight:700; text-transform:uppercase; letter-spacing:0.05em;">Phase 5</div>
+            <div style="font-weight:700; margin:4px 0 8px;">支払実行</div>
+            <ul style="font-size:0.82rem; color:#166534; padding-left:16px; margin:0;">
+              <li>月次精算</li>
+              <li>営業報酬の支払</li>
+              <li>利益按分の支払</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>顧客帰属の判定ルール</h3>
+      <div class="warn-box">
+        <strong>要決定事項：</strong>以下のルールを契約前に明確化すること。
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>ケース</th><th>帰属判定</th><th>備考</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>L1が直接獲得</td>
+              <td>当該L1に帰属</td>
+              <td>直販扱い（粗利50%）</td>
+            </tr>
+            <tr>
+              <td>L2が獲得</td>
+              <td>L2の上位L1に紐付</td>
+              <td>L2経由扱い（L1:20% + L2:30%）</td>
+            </tr>
+            <tr>
+              <td>L3が獲得</td>
+              <td>L3 &rarr; L2 &rarr; L1のチェーンで紐付</td>
+              <td>L3経由扱い（L1:10% + L2:20% + L3:20%）</td>
+            </tr>
+            <tr>
+              <td>複数チャネルが関与</td>
+              <td style="color:var(--highlight); font-weight:600;">要ルール策定</td>
+              <td>初回接触 or 最終クロージングのどちらを優先するか</td>
+            </tr>
+            <tr>
+              <td>既存顧客のアップセル</td>
+              <td style="color:var(--highlight); font-weight:600;">要ルール策定</td>
+              <td>元の獲得チャネルに帰属 or 新たにアプローチした者に帰属</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 7: Simulation -->
+  <div class="section" id="simulation">
+    <div class="section-title"><span class="num">7</span> シミュレーション</div>
+    <p class="section-desc">パラメータを変えてリアルタイムに収益配分を確認。</p>
+
+    <div class="card">
+      <div class="sim-controls">
+        <div class="sim-group">
+          <label>月商（万円）</label>
+          <input type="number" id="sim-revenue" value="500" min="0" step="50">
+        </div>
+        <div class="sim-group">
+          <label>原価率（%）</label>
+          <input type="number" id="sim-cost-rate" value="20" min="0" max="99" step="5">
+        </div>
+        <div class="sim-group">
+          <label>販売チャネル</label>
+          <select id="sim-channel">
+            <option value="direct">直販（L1: 50%）</option>
+            <option value="l2">L2経由（L1: 20% / L2: 30%）</option>
+            <option value="l3">L3経由（L1: 10% / L2: 20% / L3: 20%）</option>
+          </select>
+        </div>
+        <div class="sim-group">
+          <label>ACSC按分（%）</label>
+          <input type="number" id="sim-acsc" value="30" min="0" max="70" step="5">
+        </div>
+        <div class="sim-group">
+          <label>ウォーカー按分（%）</label>
+          <input type="number" id="sim-walker" value="45" min="0" max="70" step="5">
+        </div>
+      </div>
+
+      <div class="sim-results" id="sim-results">
+        <!-- Filled by JS -->
+      </div>
+
+      <div style="margin-top:24px;">
+        <h4 style="margin-bottom:12px;">営業報酬の内訳</h4>
+        <div id="sim-commission-bar" class="revenue-bar" style="height:44px;">
+          <!-- Filled by JS -->
+        </div>
+        <div id="sim-commission-detail" style="font-size:0.85rem; color:var(--muted); margin-top:8px; text-align:center;"></div>
+      </div>
+
+      <div style="margin-top:24px;">
+        <h4 style="margin-bottom:12px;">利益按分の内訳</h4>
+        <div id="sim-profit-bar" class="revenue-bar" style="height:44px;">
+          <!-- Filled by JS -->
+        </div>
+        <div id="sim-profit-detail" style="font-size:0.85rem; color:var(--muted); margin-top:8px; text-align:center;"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>9ケース一覧（ACSC 30%・原価率は上記設定値を使用）</h3>
+      <div class="table-wrap">
+        <table id="nine-case-table">
+          <thead>
+            <tr>
+              <th>月商</th>
+              <th>チャネル</th>
+              <th>粗利</th>
+              <th>営業費用</th>
+              <th>L1取得</th>
+              <th>L2取得</th>
+              <th>L3取得</th>
+              <th>利益</th>
+              <th>ウォーカー</th>
+              <th>ロード</th>
+              <th>ACSC</th>
+            </tr>
+          </thead>
+          <tbody id="nine-case-body">
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 8: Decision Items -->
+  <div class="section" id="decisions">
+    <div class="section-title"><span class="num">8</span> 決定事項一覧</div>
+    <p class="section-desc">スキーム運用に向けて確定が必要な事項。</p>
+
+    <div class="card">
+      <h3>確定済み事項</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>項目</th><th>決定内容</th><th>備考</th></tr></thead>
+          <tbody>
+            <tr><td>原価・定価</td><td><strong>商品企画プロセスで商品ごとに決定</strong></td><td>原価率は商品により変動</td></tr>
+            <tr><td>営業費用上限</td><td>粗利の<strong>50%</strong></td><td>全チャネル共通</td></tr>
+            <tr><td>直販報酬率</td><td>粗利の<strong>50%</strong></td><td>L1が全額取得</td></tr>
+            <tr><td>L2経由報酬率</td><td>L1: <strong>20%</strong> / L2: <strong>30%</strong></td><td>合計50%</td></tr>
+            <tr><td>L3経由報酬率</td><td>L1: <strong>10%</strong> / L2: <strong>20%</strong> / L3: <strong>20%</strong></td><td>合計50%</td></tr>
+            <tr><td>利益按分対象</td><td>ウォーカー・ロード・ACSC</td><td>最上流3社</td></tr>
+            <tr><td>最低保証</td><td>各社<strong>10%</strong></td><td>合計30%は固定</td></tr>
+            <tr><td>決定時期</td><td>商品ローンチ前</td><td>商品企画プロセスで原価・定価・按分率を一括決定</td></tr>
+            <tr><td>ACSC按分テンプレート</td><td><strong>20% / 30% / 40%</strong>の3段階</td><td>寄与度に応じて選択</td></tr>
+            <tr><td>報酬基準</td><td>全て<strong>粗利ベース</strong></td><td>売上ベースは不使用</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>未決定・要協議事項</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th style="width:30px;">#</th><th>項目</th><th>論点</th><th>優先度</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td><strong>顧客帰属の判定基準</strong></td>
+              <td>複数チャネル関与時の帰属ルール。初回接触 vs 最終クロージング。</td>
+              <td><span class="pill" style="background:#fee2e2;color:#dc2626;">高</span></td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td><strong>寄与度の具体的評価基準</strong></td>
+              <td>5軸評価のスコアリング方法、重み付けの有無。</td>
+              <td><span class="pill" style="background:#fee2e2;color:#dc2626;">高</span></td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td><strong>ロードの利益按分基準</strong></td>
+              <td>テンプレートでのロード比率をどう決めるか（ACSC決定後の残りをウォーカーとどう分けるか）。</td>
+              <td><span class="pill" style="background:#fee2e2;color:#dc2626;">高</span></td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td><strong>精算サイクル</strong></td>
+              <td>月次精算を前提とするが、締日・支払日の設定。</td>
+              <td><span class="pill" style="background:#fef3c7;color:#b45309;">中</span></td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td><strong>L2/L3の審査基準</strong></td>
+              <td>代理店として認定する要件。</td>
+              <td><span class="pill" style="background:#fef3c7;color:#b45309;">中</span></td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td><strong>月商レンジ外の対応</strong></td>
+              <td>月商100万未満・1000万超の場合の報酬率調整の有無。</td>
+              <td><span class="pill" style="background:#dbeafe;color:#1d4ed8;">低</span></td>
+            </tr>
+            <tr>
+              <td>7</td>
+              <td><strong>解約・返品時の報酬扱い</strong></td>
+              <td>クローバック条項の有無。</td>
+              <td><span class="pill" style="background:#dbeafe;color:#1d4ed8;">低</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<div style="background:#f1f5f9; padding:32px 0; text-align:center; color:var(--muted); font-size:0.82rem; margin-top:40px; border-top:1px solid var(--border);">
+  報酬スキーム説明資料 v1.0 | 作成日: 2025/02/05 | CONFIDENTIAL
+</div>
+
+<script>
+// Simulation Logic
+function simulate() {
+  const revenue = parseFloat(document.getElementById('sim-revenue').value) || 0;
+  const costRateInput = parseFloat(document.getElementById('sim-cost-rate').value) || 20;
+  const channel = document.getElementById('sim-channel').value;
+  let acscPct = parseFloat(document.getElementById('sim-acsc').value) || 0;
+  let walkerPct = parseFloat(document.getElementById('sim-walker').value) || 0;
+
+  const costRate = costRateInput / 100;
+  const grossProfit = revenue * (1 - costRate);
+  const salesExpense = grossProfit * 0.5;
+  const profit = grossProfit * 0.5;
+
+  // Commission split
+  let l1Pct, l2Pct, l3Pct;
+  if (channel === 'direct') { l1Pct = 50; l2Pct = 0; l3Pct = 0; }
+  else if (channel === 'l2') { l1Pct = 20; l2Pct = 30; l3Pct = 0; }
+  else { l1Pct = 10; l2Pct = 20; l3Pct = 20; }
+
+  const l1Amount = grossProfit * l1Pct / 100;
+  const l2Amount = grossProfit * l2Pct / 100;
+  const l3Amount = grossProfit * l3Pct / 100;
+
+  // Profit split - Road gets the remainder
+  // Clamp values
+  if (acscPct > 70) acscPct = 70;
+  if (walkerPct > 70) walkerPct = 70;
+  if (acscPct + walkerPct > 100) walkerPct = 100 - acscPct;
+  let roadPct = 100 - acscPct - walkerPct;
+  if (roadPct < 0) roadPct = 0;
+
+  const walkerAmount = profit * walkerPct / 100;
+  const roadAmount = profit * roadPct / 100;
+  const acscAmount = profit * acscPct / 100;
+
+  // Results
+  const results = document.getElementById('sim-results');
+  results.innerHTML = `
+    <div class="sim-card">
+      <div class="label">売上</div>
+      <div class="value">${revenue.toFixed(0)}<span style="font-size:0.9rem;">万</span></div>
+    </div>
+    <div class="sim-card">
+      <div class="label">粗利（${(100 - costRateInput).toFixed(0)}%）</div>
+      <div class="value">${grossProfit.toFixed(0)}<span style="font-size:0.9rem;">万</span></div>
+    </div>
+    <div class="sim-card">
+      <div class="label">営業費用（粗利50%）</div>
+      <div class="value">${salesExpense.toFixed(0)}<span style="font-size:0.9rem;">万</span></div>
+    </div>
+    <div class="sim-card highlight">
+      <div class="label">利益（粗利50%）</div>
+      <div class="value">${profit.toFixed(0)}<span style="font-size:0.9rem;">万</span></div>
+    </div>
+    <div class="sim-card" style="border-color:var(--walker);">
+      <div class="label">ウォーカー</div>
+      <div class="value" style="color:var(--walker);">${walkerAmount.toFixed(1)}<span style="font-size:0.9rem;">万</span></div>
+      <div class="sub">利益の${walkerPct}%</div>
+    </div>
+    <div class="sim-card" style="border-color:var(--road);">
+      <div class="label">ロード</div>
+      <div class="value" style="color:var(--road);">${roadAmount.toFixed(1)}<span style="font-size:0.9rem;">万</span></div>
+      <div class="sub">利益の${roadPct}%</div>
+    </div>
+    <div class="sim-card" style="border-color:var(--acsc);">
+      <div class="label">ACSC</div>
+      <div class="value" style="color:var(--acsc);">${acscAmount.toFixed(1)}<span style="font-size:0.9rem;">万</span></div>
+      <div class="sub">利益の${acscPct}%</div>
+    </div>
+  `;
+
+  // Commission bar
+  const commBar = document.getElementById('sim-commission-bar');
+  let commHTML = '';
+  if (l1Pct > 0) commHTML += `<div style="width:${l1Pct/50*100}%; background:var(--l1);">L1: ${l1Amount.toFixed(0)}万 (${l1Pct}%)</div>`;
+  if (l2Pct > 0) commHTML += `<div style="width:${l2Pct/50*100}%; background:var(--l2);">L2: ${l2Amount.toFixed(0)}万 (${l2Pct}%)</div>`;
+  if (l3Pct > 0) commHTML += `<div style="width:${l3Pct/50*100}%; background:var(--l3);">L3: ${l3Amount.toFixed(0)}万 (${l3Pct}%)</div>`;
+  commBar.innerHTML = commHTML;
+
+  const commDetail = document.getElementById('sim-commission-detail');
+  commDetail.textContent = `営業費用合計: ${salesExpense.toFixed(0)}万（粗利${grossProfit.toFixed(0)}万の50%）`;
+
+  // Profit bar
+  const profitBar = document.getElementById('sim-profit-bar');
+  profitBar.innerHTML = `
+    <div style="width:${walkerPct}%; background:var(--walker);">W ${walkerPct}%</div>
+    <div style="width:${roadPct}%; background:var(--road);">R ${roadPct}%</div>
+    <div style="width:${acscPct}%; background:var(--acsc);">A ${acscPct}%</div>
+  `;
+
+  const profitDetail = document.getElementById('sim-profit-detail');
+  profitDetail.textContent = `利益合計: ${profit.toFixed(0)}万 → ウォーカー${walkerAmount.toFixed(1)}万 / ロード${roadAmount.toFixed(1)}万 / ACSC${acscAmount.toFixed(1)}万`;
+}
+
+// 9-case table
+function buildNineCaseTable() {
+  const revenues = [100, 500, 1000];
+  const channels = [
+    { name: '直販', l1: 50, l2: 0, l3: 0 },
+    { name: 'L2経由', l1: 20, l2: 30, l3: 0 },
+    { name: 'L3経由', l1: 10, l2: 20, l3: 20 }
+  ];
+  const costRateInput = parseFloat(document.getElementById('sim-cost-rate').value) || 20;
+  const grossMarginRate = 1 - (costRateInput / 100);
+  const acscPct = 30;
+  const walkerPct = 45; // auto calc for 30% ACSC
+  const roadPct = 25;
+
+  const tbody = document.getElementById('nine-case-body');
+  let html = '';
+  revenues.forEach(rev => {
+    channels.forEach((ch, i) => {
+      const gp = rev * grossMarginRate;
+      const se = gp * 0.5;
+      const l1 = gp * ch.l1 / 100;
+      const l2 = gp * ch.l2 / 100;
+      const l3 = gp * ch.l3 / 100;
+      const profit = gp * 0.5;
+      const w = profit * walkerPct / 100;
+      const r = profit * roadPct / 100;
+      const a = profit * acscPct / 100;
+      html += `<tr${i === 0 ? ' style="border-top:2px solid #cbd5e1;"' : ''}>
+        <td>${i === 0 ? rev + '万' : ''}</td>
+        <td>${ch.name}</td>
+        <td>${gp.toFixed(0)}万</td>
+        <td>${se.toFixed(0)}万</td>
+        <td>${l1.toFixed(0)}万 (${ch.l1}%)</td>
+        <td>${ch.l2 > 0 ? l2.toFixed(0) + '万 (' + ch.l2 + '%)' : '-'}</td>
+        <td>${ch.l3 > 0 ? l3.toFixed(0) + '万 (' + ch.l3 + '%)' : '-'}</td>
+        <td>${profit.toFixed(0)}万</td>
+        <td>${w.toFixed(1)}万</td>
+        <td>${r.toFixed(1)}万</td>
+        <td>${a.toFixed(1)}万</td>
+      </tr>`;
+    });
+  });
+  tbody.innerHTML = html;
+}
+
+// Event listeners
+document.getElementById('sim-revenue').addEventListener('input', simulate);
+document.getElementById('sim-cost-rate').addEventListener('input', function() { simulate(); buildNineCaseTable(); });
+document.getElementById('sim-channel').addEventListener('change', simulate);
+document.getElementById('sim-acsc').addEventListener('input', simulate);
+document.getElementById('sim-walker').addEventListener('input', simulate);
+
+// Init
+simulate();
+buildNineCaseTable();
+
+// Smooth scroll for nav
+document.querySelectorAll('.nav a').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+</script>
+
+</body>
+</html>
